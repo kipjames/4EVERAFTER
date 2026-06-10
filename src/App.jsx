@@ -145,36 +145,88 @@ function SectionHeader({ title, icon }) {
   );
 }
 
-// ── Background Selector — Vertical Portrait Thumbnails ────────────────
+// ── Background Selector — Hover Preview ──────────────────────────────
 function BackgroundSelector({ value, onChange }) {
+  const [hovered, setHovered] = useState(null);
+  const [previewPos, setPreviewPos] = useState({ x: 0, y: 0 });
+
+  const handleMouseEnter = (e, bgId) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setPreviewPos({ x: rect.left + rect.width / 2, y: rect.top });
+    setHovered(bgId);
+  };
+
+  const hoveredBg = backgrounds.find(b => b.id === hovered);
+
   return (
     <div style={{ marginBottom: 28 }}>
       <label style={{ ...labelStyle, marginBottom: 10 }}>
         Choose Memorial Background <span style={{ color: G.gold }}>*</span>
       </label>
       <p style={{ fontSize: 11, color: G.gray, fontStyle: "italic", margin: "0 0 14px", fontFamily: "Georgia, serif" }}>
-        Select the background that best honors your loved one's spirit
+        Hover any thumbnail to preview full background · Click to select
       </p>
-      {/* 5 columns x 3 rows for 15 backgrounds */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 10 }}>
-        {backgrounds.map(bg => (
-          <button key={bg.id} onClick={() => onChange(bg.id)} style={{
-            background: "transparent", border: "none", padding: 0,
-            cursor: "pointer", display: "flex", flexDirection: "column",
-            alignItems: "center", gap: 5,
+
+      {/* Full Portrait Hover Preview */}
+      {hovered && hoveredBg && (
+        <div style={{
+          position: "fixed",
+          left: Math.min(previewPos.x - 95, window.innerWidth - 200),
+          top: Math.max(previewPos.y - 330, 10),
+          width: 190, height: 253,
+          borderRadius: 12, overflow: "hidden",
+          border: `3px solid ${G.goldLight}`,
+          boxShadow: `0 0 0 2px ${G.gold}, 0 24px 60px rgba(0,0,0,0.8)`,
+          zIndex: 9999, pointerEvents: "none",
+          background: "#1a0d00",
+        }}>
+          <img
+            src={hoveredBg.image}
+            alt={hoveredBg.label}
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          />
+          <div style={{
+            position: "absolute", bottom: 0, left: 0, right: 0,
+            background: "linear-gradient(to top, rgba(0,0,0,0.9), transparent)",
+            padding: "24px 10px 10px", textAlign: "center",
           }}>
-            {/* Portrait thumbnail — 3:4 ratio */}
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, fontWeight: 700, color: G.goldLight, letterSpacing: "0.5px" }}>
+              {hoveredBg.label}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 5 x 3 compact grid */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 8 }}>
+        {backgrounds.map(bg => (
+          <button
+            key={bg.id}
+            onClick={() => onChange(bg.id)}
+            onMouseEnter={e => handleMouseEnter(e, bg.id)}
+            onMouseLeave={() => setHovered(null)}
+            style={{
+              background: "transparent", border: "none",
+              padding: 0, cursor: "pointer",
+              display: "flex", flexDirection: "column",
+              alignItems: "center", gap: 4,
+            }}
+          >
             <div style={{
-              width: "100%",
-              paddingBottom: "133%", // 3:4 portrait ratio
-              position: "relative",
-              borderRadius: 8,
-              overflow: "hidden",
-              border: value === bg.id ? `3px solid ${G.goldLight}` : "3px solid rgba(201,148,26,0.15)",
+              width: "100%", paddingBottom: "75%",
+              position: "relative", borderRadius: 8, overflow: "hidden",
+              border: value === bg.id
+                ? `3px solid ${G.goldLight}`
+                : hovered === bg.id
+                  ? `3px solid rgba(201,148,26,0.6)`
+                  : "3px solid rgba(201,148,26,0.15)",
               boxShadow: value === bg.id
-                ? `0 0 0 2px ${G.gold}, 0 6px 20px rgba(201,148,26,0.45)`
-                : "0 2px 8px rgba(0,0,0,0.5)",
-              transition: "all 0.2s ease",
+                ? `0 0 0 2px ${G.gold}, 0 4px 16px rgba(201,148,26,0.5)`
+                : hovered === bg.id
+                  ? `0 4px 16px rgba(0,0,0,0.5)`
+                  : "0 2px 6px rgba(0,0,0,0.4)",
+              transition: "all 0.15s ease",
+              transform: hovered === bg.id ? "scale(1.08)" : "scale(1)",
             }}>
               <img
                 src={bg.image}
@@ -184,26 +236,28 @@ function BackgroundSelector({ value, onChange }) {
                   width: "100%", height: "100%",
                   objectFit: "cover", display: "block",
                 }}
-                onError={e => { e.target.style.display = "none"; }}
+                onError={e => {
+                  e.target.style.display = "none";
+                  e.target.parentElement.style.background = "rgba(201,148,26,0.08)";
+                }}
               />
               {value === bg.id && (
                 <div style={{
-                  position: "absolute", top: 4, right: 4,
-                  width: 20, height: 20, borderRadius: "50%",
-                  background: G.gold, display: "flex",
-                  alignItems: "center", justifyContent: "center",
-                  fontSize: 11, color: "#1a0d00", fontWeight: 700,
-                  boxShadow: "0 2px 6px rgba(0,0,0,0.4)",
+                  position: "absolute", top: 3, right: 3,
+                  width: 18, height: 18, borderRadius: "50%",
+                  background: G.gold,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 10, color: "#1a0d00", fontWeight: 700,
                 }}>✓</div>
               )}
             </div>
-            {/* Label */}
             <span style={{
-              fontSize: 9, fontFamily: "'Cormorant Garamond', serif",
-              fontWeight: value === bg.id ? 700 : 500,
-              color: value === bg.id ? G.goldLight : G.gray,
-              textAlign: "center", lineHeight: 1.3,
-              letterSpacing: "0.2px",
+              fontSize: 8.5,
+              fontFamily: "'Cormorant Garamond', serif",
+              fontWeight: value === bg.id ? 700 : 400,
+              color: value === bg.id ? G.goldLight : hovered === bg.id ? G.gold : G.gray,
+              textAlign: "center", lineHeight: 1.2,
+              transition: "color 0.15s",
             }}>{bg.label}</span>
           </button>
         ))}
