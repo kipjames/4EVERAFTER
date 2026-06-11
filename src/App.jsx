@@ -416,7 +416,7 @@ function EditableParagraph({ text, index, onEdit, onRewrite, rewriting, isMobile
         </div>
       ) : (
         <>
-          <p style={{ fontSize: 14, lineHeight: 1.88, color: "#2a2a2a", margin: 0, textAlign: "justify" }}>{text}</p>
+          <p style={{ fontSize: 14, lineHeight: 1.88, color: "#1a0800", margin: 0, textAlign: "justify" }}>{text}</p>
           {isMobile ? (
             <div style={{ position: "absolute", bottom: 2, right: 4, display: "flex", gap: 4 }}>
               <button onClick={() => { setDraft(text); setEditing(true); }} style={{ padding: "3px 8px", fontSize: 10, borderRadius: 5, background: "rgba(253,248,240,0.95)", border: `1px solid rgba(201,148,26,0.3)`, cursor: "pointer", color: G.goldDark, fontFamily: "Georgia, serif" }}>✏️</button>
@@ -469,7 +469,7 @@ function ObituaryOutput({ paragraphs, setParagraphs, formData, photos, bgId, bui
         @page { margin: 0; size: 8in 10in; }
         body { margin: 0; padding: 0; font-family: 'Cormorant Garamond', Georgia, serif; }
         .bg { background-image: url('${bg.image}'); background-size: cover; background-position: center; width: 8in; height: 10in; padding: 0.5in; box-sizing: border-box; }
-        .paper { background: ${bg.paperBg}; border-radius: 8px; padding: 0.35in 0.4in; height: 9in; box-sizing: border-box; overflow: hidden; }
+        .paper { background: rgba(255,252,242,0.75); border-radius: 8px; padding: 0.35in 0.4in; height: 9in; box-sizing: border-box; overflow: hidden; }
         .flowers { text-align:center; color:#C9941A; font-size:14px; letter-spacing:5px; margin:0 0 5px; }
         .in-loving { text-align:center; font-size:10px; color:#888; letter-spacing:4px; text-transform:uppercase; font-style:italic; }
         .name { font-family:'Dancing Script',cursive; font-size:42px; text-align:center; color:#8B6310; margin:3px 0 14px; line-height:1.2; }
@@ -540,7 +540,7 @@ function ObituaryOutput({ paragraphs, setParagraphs, formData, photos, bgId, bui
         padding: isMobile ? "10px" : "16px",
       }}>
         <div style={{
-          background: bg.paperBg, borderRadius: 10,
+          background: "rgba(255,252,242,0.75)", borderRadius: 10,
           padding: isMobile ? "22px 16px" : "36px 40px",
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           position: "relative",
