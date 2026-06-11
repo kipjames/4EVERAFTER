@@ -349,7 +349,7 @@ function PhotoUpload({ photos, onChange }) {
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
         {photos.map((p, i) => (
           <div key={i} style={{ position: "relative" }}>
-            <img src={p} alt={`Photo ${i + 1}`} style={{ width: 65, height: 78, objectFit: "cover", borderRadius: 7, border: `2px solid ${G.gold}`, boxShadow: "0 4px 12px rgba(0,0,0,0.4)" }} />
+            <img src={p} alt={`Memorial ${i + 1}`} style={{ width: 65, height: 78, objectFit: "cover", borderRadius: 7, border: `2px solid ${G.gold}`, boxShadow: "0 4px 12px rgba(0,0,0,0.4)" }} />
             <button onClick={() => onChange(prev => prev.filter((_, j) => j !== i))} style={{
               position: "absolute", top: -6, right: -6, width: 18, height: 18,
               borderRadius: "50%", background: "#cc3333", border: "none",
