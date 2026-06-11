@@ -5,9 +5,12 @@ const G = {
   gold: "#C9941A", goldLight: "#F5C842", goldDark: "#8B6310",
   goldDeep: "#5C3D08", black: "#000000", nearBlack: "#0a0800",
   darkBrown: "#1a0d00", cream: "#FDF8F0", charcoal: "#1a1a1a",
-  gray: "#888", inputBg: "rgba(20,10,0,0.92)", inputBorder: "rgba(201,148,26,0.4)",
-  formBg: "rgba(10,5,0,0.93)",
+  gray: "#666", inputBg: "rgba(255,250,240,0.9)", inputBorder: "rgba(139,99,16,0.3)",
+  formBg: "rgba(253,248,235,0.97)",
 };
+
+// Parchment texture SVG as data URL
+const PARCHMENT_BG = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend in='SourceGraphic' mode='multiply'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E"), linear-gradient(135deg, #fdf5e0 0%, #faf0d0 25%, #fdf5e0 50%, #f8edc8 75%, #fdf5e0 100%)`;
 
 // ── 15 Background Themes ─────────────────────────────────────────────
 const BASE = "https://4everafter.cloud/wp-content/uploads/2026/base-options";
@@ -98,7 +101,7 @@ function wordCount(text) {
 const labelStyle = {
   display: "block",
   fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
-  fontSize: 11, fontWeight: 600, color: G.goldLight,
+  fontSize: 11, fontWeight: 600, color: G.goldDark,
   marginBottom: 4, letterSpacing: "0.8px", textTransform: "uppercase",
 };
 
@@ -107,7 +110,7 @@ function getInputStyle(warn) {
     width: "100%", padding: "10px 13px", borderRadius: 8,
     border: `1.5px solid ${warn ? "#e67e00" : G.inputBorder}`,
     background: G.inputBg, fontFamily: "Georgia, serif",
-    fontSize: 13, color: G.cream, outline: "none",
+    fontSize: 13, color: G.charcoal, outline: "none",
     transition: "all 0.2s", boxSizing: "border-box",
   };
 }
@@ -131,7 +134,7 @@ function Logo() {
 
 // ── Gold Divider ──────────────────────────────────────────────────────
 function GoldLine() {
-  return <div style={{ height: 1, background: `linear-gradient(to right, transparent, ${G.gold}, transparent)`, margin: "0 0 20px" }} />;
+  return <div style={{ height: 1, background: `linear-gradient(to right, transparent, rgba(201,148,26,0.5), transparent)`, margin: "0 0 20px" }} />;
 }
 
 // ── Section Header ────────────────────────────────────────────────────
@@ -139,7 +142,7 @@ function SectionHeader({ title, icon }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14, paddingBottom: 8, borderBottom: `1px solid rgba(201,148,26,0.2)` }}>
       <span style={{ color: G.gold, fontSize: 14 }}>{icon}</span>
-      <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, color: G.goldLight, margin: 0, fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase" }}>{title}</h2>
+      <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, color: G.goldDark, margin: 0, fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase" }}>{title}</h2>
       <div style={{ flex: 1, height: 1, background: `linear-gradient(to right, rgba(201,148,26,0.25), transparent)` }} />
     </div>
   );
@@ -278,14 +281,14 @@ function ToneSelector({ value, onChange }) {
           <button key={t.id} onClick={() => onChange(t.id)} style={{
             background: value === t.id
               ? `linear-gradient(135deg, ${G.goldDeep}, ${G.goldDark}, ${G.gold})`
-              : "rgba(255,255,255,0.04)",
+              : "rgba(255,250,235,0.8)",
             border: value === t.id ? `1.5px solid ${G.goldLight}` : "1.5px solid rgba(201,148,26,0.2)",
             borderRadius: 10, padding: "12px 10px", cursor: "pointer", textAlign: "left",
             transition: "all 0.2s",
             boxShadow: value === t.id ? `0 4px 20px rgba(201,148,26,0.3)` : "none",
           }}>
-            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 12, fontWeight: 700, color: value === t.id ? G.cream : G.goldLight, marginBottom: 3, letterSpacing: "0.5px" }}>{t.label}</div>
-            <div style={{ fontSize: 10, color: value === t.id ? "rgba(253,248,240,0.7)" : G.gray, fontStyle: "italic", fontFamily: "Georgia, serif" }}>{t.desc}</div>
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 12, fontWeight: 700, color: value === t.id ? G.cream : G.goldDark, marginBottom: 3, letterSpacing: "0.5px" }}>{t.label}</div>
+            <div style={{ fontSize: 10, color: value === t.id ? "rgba(253,248,240,0.75)" : "#7a6040", fontStyle: "italic", fontFamily: "Georgia, serif" }}>{t.desc}</div>
           </button>
         ))}
       </div>
@@ -691,7 +694,7 @@ Write a heartfelt, flowing obituary of approximately 500 words. Use natural para
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: G.black, fontFamily: "Georgia, serif" }}>
+    <div style={{ minHeight: "100vh", background: PARCHMENT_BG, fontFamily: "Georgia, serif" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap');
         * { box-sizing: border-box; }
@@ -699,7 +702,7 @@ Write a heartfelt, flowing obituary of approximately 500 words. Use natural para
         button { transition: transform 0.1s, box-shadow 0.1s; }
         button:active { transform: scale(0.97); }
         ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #0a0800; }
+        ::-webkit-scrollbar-track { background: #f5e8c8; }
         ::-webkit-scrollbar-thumb { background: #8B6310; border-radius: 3px; }
         @media (max-width:500px) { input { font-size: 16px !important; } }
       `}</style>
@@ -711,17 +714,19 @@ Write a heartfelt, flowing obituary of approximately 500 words. Use natural para
 
         {step === "form" && (
           <div style={{
-            background: G.formBg, borderRadius: 20,
+            background: "rgba(253,248,235,0.97)",
+            backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend in='SourceGraphic' mode='multiply'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E\")",
+            borderRadius: 20,
             padding: isMobile ? "20px 16px" : "36px 38px",
-            boxShadow: `0 30px 80px rgba(0,0,0,0.85), inset 0 1px 0 rgba(201,148,26,0.12)`,
-            border: `1px solid rgba(201,148,26,0.18)`,
+            boxShadow: "0 20px 60px rgba(139,99,16,0.15), 0 4px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(245,200,66,0.3)",
+            border: `1px solid rgba(201,148,26,0.25)`,
           }}>
             <div style={{ textAlign: "center", marginBottom: 28 }}>
-              <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 20 : 26, color: G.cream, margin: "0 0 6px", fontWeight: 600, letterSpacing: "1px" }}>
+              <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 20 : 26, color: G.goldDeep, margin: "0 0 6px", fontWeight: 600, letterSpacing: "1px" }}>
                 Create a Meaningful Tribute
               </h1>
               <div style={{ height: 1, background: `linear-gradient(to right, transparent, rgba(201,148,26,0.35), transparent)`, margin: "10px 0 8px" }} />
-              <p style={{ color: G.gray, fontSize: 12, margin: 0, fontStyle: "italic" }}>
+              <p style={{ color: "#7a6040", fontSize: 12, margin: 0, fontStyle: "italic" }}>
                 Share what made your loved one extraordinary — we'll craft their life's story with care and dignity
               </p>
             </div>
@@ -783,7 +788,7 @@ Write a heartfelt, flowing obituary of approximately 500 words. Use natural para
               {loading ? "✦  Crafting Their Life's Story..." : "✦  Create Your Life's Story Tribute  ✦"}
             </button>
 
-            <p style={{ textAlign: "center", fontSize: 10, color: "rgba(201,148,26,0.4)", margin: "10px 0 0", fontStyle: "italic", fontFamily: "Georgia, serif" }}>
+            <p style={{ textAlign: "center", fontSize: 10, color: "rgba(139,99,16,0.5)", margin: "10px 0 0", fontStyle: "italic", fontFamily: "Georgia, serif" }}>
               Powered by AI · 4EverAfter™ · Secure & Confidential
             </p>
           </div>
@@ -792,12 +797,12 @@ Write a heartfelt, flowing obituary of approximately 500 words. Use natural para
         {step === "result" && paragraphs.length > 0 && (
           <div>
             <div style={{
-              background: "rgba(201,148,26,0.07)", border: `1px solid rgba(201,148,26,0.22)`,
+              background: "rgba(253,245,220,0.9)", border: `1px solid rgba(201,148,26,0.3)`,
               borderRadius: 10, padding: "10px 16px", marginBottom: 12,
               display: "flex", alignItems: "center", gap: 8,
             }}>
               <span style={{ fontSize: 13 }}>✏️</span>
-              <div style={{ fontFamily: "Georgia, serif", fontSize: isMobile ? 11 : 12, color: G.goldLight }}>
+              <div style={{ fontFamily: "Georgia, serif", fontSize: isMobile ? 11 : 12, color: G.goldDark }}>
                 <strong>Your tribute is ready.</strong> {isMobile ? "Tap ✏️ or ✦ below each paragraph." : "Hover any paragraph to edit directly or request an AI rewrite."}
               </div>
             </div>
@@ -811,7 +816,7 @@ Write a heartfelt, flowing obituary of approximately 500 words. Use natural para
             <div style={{ display: "flex", gap: 10, marginTop: 12 }}>
               <button onClick={() => { setStep("form"); setParagraphs([]); }} style={{
                 flex: 1, padding: "13px 8px",
-                background: "rgba(255,255,255,0.04)",
+                background: "rgba(255,250,235,0.8)",
                 border: `1px solid rgba(201,148,26,0.25)`,
                 borderRadius: 10, cursor: "pointer",
                 fontFamily: "'Cormorant Garamond', serif",
