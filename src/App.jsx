@@ -109,8 +109,8 @@ function getInputStyle(warn) {
   return {
     width: "100%", padding: "10px 13px", borderRadius: 8,
     border: `1.5px solid ${warn ? "#e67e00" : G.inputBorder}`,
-    background: G.inputBg, fontFamily: "Georgia, serif",
-    fontSize: 13, color: G.charcoal, outline: "none",
+    background: "rgba(255,252,242,0.95)", fontFamily: "Georgia, serif",
+    fontSize: 13, color: "#2a1a00", outline: "none",
     transition: "all 0.2s", boxSizing: "border-box",
   };
 }
@@ -320,7 +320,7 @@ function Field({ field, value, onChange }) {
         placeholder={field.placeholder}
         value={value || ""}
         onChange={e => onChange(field.id, e.target.value)}
-        onFocus={e => { e.target.style.borderColor = G.goldLight; e.target.style.boxShadow = `0 0 0 3px rgba(201,148,26,0.15)`; }}
+        onFocus={e => { e.target.style.borderColor = G.gold; e.target.style.boxShadow = `0 0 0 3px rgba(201,148,26,0.2)`; }}
         onBlur={e => { e.target.style.borderColor = (isOver || isWarn) ? "#e67e00" : G.inputBorder; e.target.style.boxShadow = "none"; }}
       />
       {isOver && (
@@ -698,7 +698,7 @@ Write a heartfelt, flowing obituary of approximately 500 words. Use natural para
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap');
         * { box-sizing: border-box; }
-        input::placeholder { color: rgba(201,148,26,0.3); font-style: italic; }
+        input::placeholder { color: rgba(100,70,20,0.45); font-style: italic; }
         button { transition: transform 0.1s, box-shadow 0.1s; }
         button:active { transform: scale(0.97); }
         ::-webkit-scrollbar { width: 5px; }
@@ -760,8 +760,8 @@ Write a heartfelt, flowing obituary of approximately 500 words. Use natural para
                 width: "100%",
                 padding: isMobile ? "18px 16px" : "22px 16px",
                 background: loading
-                  ? "rgba(80,60,20,0.4)"
-                  : `linear-gradient(180deg, ${G.goldLight} 0%, ${G.gold} 40%, ${G.goldDark} 100%)`,
+                  ? "rgba(180,160,100,0.3)"
+                  : `linear-gradient(180deg, #F5C842 0%, #C9941A 45%, #8B6310 100%)`,
                 border: loading ? `1px solid rgba(201,148,26,0.2)` : `1px solid ${G.goldLight}`,
                 borderRadius: 14,
                 cursor: loading ? "not-allowed" : "pointer",
